@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
+
         if(text.endsWith("+")
                 || text.endsWith("-")
                 || text.endsWith("*")
@@ -72,11 +73,15 @@ public class MainActivity extends AppCompatActivity {
         {
             numberText.setText(text.substring(0, text.length() - 1));
         }
-        else if(text.contains("+")
+        else if(text.startsWith("-"))
+        {
+            text = text.substring(1, text.length());
+        }
+
+        if(text.contains("+")
         || text.contains("-")
         || text.contains("*")
         || text.contains("/")) {
-
             result();
         }
 
@@ -164,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        for (int i = 0; i < expression.length(); i++) {
+        for (int i = 1; i < expression.length(); i++) {
             char c = expression.charAt(i);
             if (c == '+' || c == '-' || c == '*' || c == '/') {
                 operator = c;
