@@ -5,5 +5,13 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
+    <color name="my_background">#fdfcfe</color>
+    <color name="my_text_color">#4e4c4e</color>
+    <color name="my_button_color">#f8f6f8</color>
+    <color name="equals_button_color">#49a113</color>
+    <color name="action_text_color">#2b840c</color>
+    <color name="clear_text_color">#dd322b</color>
+
+
     <style name="Theme.Calculator" parent="Base.Theme.Calculator" />
 </resources>

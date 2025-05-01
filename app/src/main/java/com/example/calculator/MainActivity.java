@@ -1,9 +1,11 @@
 package com.example.calculator;
 
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,16 +36,34 @@ public class MainActivity extends AppCompatActivity {
     public void numberListener(View view){
         Button button = (Button) view;
 
-        String text = button.getText().toString();
+        String buttonText = button.getText().toString();
 //        Object tag = button.getTag();
 //        int id = button.getId();
         //if...
 
-        numberText.append(text);
+        String text = numberText.getText().toString();
+        String[] stringNumbers = text.split("[+\\-*/]", -1);
+        if(stringNumbers[stringNumbers.length - 1].length() >= 15){
+
+            Toast toast = Toast.makeText(this, "You cannot enter more than 15 digits", Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.BOTTOM, 0, 100);
+            toast.show();
+
+            return;
+
+        }
+
+
+        numberText.append(buttonText);
     }
     public void operatorListener(View view){
 
         String text = numberText.getText().toString();
+
+        if(text.isEmpty())
+        {
+            return;
+        }
 
         if(text.endsWith("+")
                 || text.endsWith("-")
@@ -66,9 +86,56 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+    public void dotListener(View view)
+    {
+        String text = numberText.getText().toString();
+
+        if(text.isEmpty())
+        {
+            numberText.append("0.");
+            return;
+        }
+
+
+        String[] stringNumbers = text.split("[+\\-*/]", -1);
+        if(stringNumbers[stringNumbers.length - 1].isEmpty())
+        {
+            numberText.append("0.");
+            return;
+        }
+        if(stringNumbers[stringNumbers.length - 1].contains("."))
+        {
+            return;
+        }
+
+        numberText.append(".");
+    }
+
+    public void backspaceListener(View view){
+        String text = numberText.getText().toString();
+
+        if(text.isEmpty())
+        {
+            return;
+        }
+
+        numberText.setText(text.substring(0, text.length() - 1));
+
+    }
+    public void clearListener(View view){
+        numberText.setText("");
+    }
+
+
     public void equalsListener(View view){
 
         String text = numberText.getText().toString();
+
+        if(text.isEmpty())
+        {
+            return;
+        }
 
         if(text.endsWith("+")
                 || text.endsWith("-")
@@ -80,9 +147,6 @@ public class MainActivity extends AppCompatActivity {
 
         result();
     }
-    public void clearListener(View view){
-        numberText.setText("");
-    }
 
     public void result()
     {
@@ -93,6 +157,11 @@ public class MainActivity extends AppCompatActivity {
         char operator = 0;
         int operatorIndex = -1;
         String expression = numberText.getText().toString();
+
+        if(expression.isEmpty())
+        {
+            return;
+        }
 
 
         for (int i = 0; i < expression.length(); i++) {
@@ -124,11 +193,16 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case '/':
                 if (second == 0) {
+
+                    Toast toast = Toast.makeText(this, "You can't divide by zero", Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.BOTTOM, 0, 100);
+                    toast.show();
+
                     return;
                 }
                 result = first / second;
                 break;
-            default: throw new IllegalStateException("Неизвестный оператор: " + operator);
+            default: throw new IllegalStateException("unknown operator: " + operator);
         }
 
         if(result == (long) result)

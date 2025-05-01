@@ -4,4 +4,12 @@
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
     </style>
+
+
+    <color name="my_background">#000000</color>
+    <color name="my_text_color">#fbfafb</color>
+    <color name="my_button_color">#171617</color>
+    <color name="equals_button_color">#2b840c</color>
+    <color name="action_text_color">#76da3a</color>
+    <color name="clear_text_color">#fa6e6a</color>
 </resources>
